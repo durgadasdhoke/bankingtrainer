@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Table</title>
+    <!-- developer: Durgadas Dhoke contact me: phone:7774929109 mail: durgadasdhoke@gmail.com -->
+    <style>
+        /* //styling starts here */
+        html,body {height: 100%;
+            background-color: rgba(0,0,0,0.2);
+         }
+        #container{
+            position: relative;
+            width: 50%;
+            margin: auto;
+            background-color: rgba(0,0,0,0.2);
+        }
+
+        #select{
+            border: 2px black solid;
+            height: 100px;
+            background-color: antiquewhite;
+            text-align: center;
+            align-items: center;
+        }
+
+        #displayarea{
+            border: 2px black solid;
+            height: 0px;
+            background-color: antiquewhite;
+            text-align: center;
+            transition: 1s;
+        }
+
+        #min-box{
+            position: relative;
+            /* width: 80%; */
+            padding: 5px 10px;
+            margin: 0 20px;
+            border: 2px black solid; 
+            border-radius: 10px;  
+        }
+        #max-box{
+            position: relative;
+            /* width: ; */
+            clear: both;
+            margin: 5px 0px;
+            padding: 5px 10px;
+            border: 2px black solid; 
+            border-radius: 10px;  
+        }
+        #inputbox{
+            position: relative;
+            width: 100%;
+            margin: 5px -10px;
+            padding: 5px 20px;
+            border: none; 
+            border-radius: 10px;  
+        }
+
+        #note{
+            overflow-X:scroll;
+        }
+       
+        @media  screen and (max-width: 600px) {
+            #container{
+                width: 100%;
+            }    
+        }
+        #start{
+            width: 50%;
+            height: 30px;
+            padding: 0px 10px;
+            font-size: 15px;
+            border-radius: 20px;
+        }
+        #start:hover{
+            background-color:rgba(0,0,0,0.5);
+            color: white;
+            animation: anima infinite;
+            transition: .5s;
+        }
+        
+        #close{
+            position: fixed;
+            right: 2%;
+        }
+        
+    </style>
+</head>
+<body>
+    <div id="container" >
+
+        <div id="select">
+            <form action="./index.html">
+                <input id="close" type="submit" value="X">
+            </form>
+            <p>Multiplication  Practice</p>
+            <!-- <input id="min-box" type="text" placeholder="Enter Minimum Value">
+            <input id="max-box" type="text" placeholder="Enter Maximum Value"> -->
+            <button id="start">Start</button>
+        </div>
+
+        <hr>
+        <div id="displayarea">
+            <h1 id="question"></h1>
+            <div class="ali"><p id="pre"></p></div>     
+        </div>
+        <hr>
+
+        <input id="inputbox" type="text" placeholder="Enter Answer Here..." value="">
+        <hr>
+
+        <pre id="note"><b> NOTE:</b> Click on Start Button to get Started
+ Enter you answer in input section and then press Enter to see the result
+ To get answer just Enter into the input section
+ for more suggestions write to me 
+ E-mail : durgadasdhoke@gmail.com</pre>
+        <hr>
+    </div>
+
+    <script>
+        const UserAns = document.getElementById('inputbox');
+        const que = document.getElementById("question");
+        const previous = document.getElementById("pre");
+        const tableans = document.getElementById("tab");
+        const start = document.getElementById("start");
+        const minbox = document.getElementById("min-box");
+        const maxbox = document.getElementById("max-box");
+        const anim = document.getElementById("displayarea");
+
+        const min = 11,max = 99;
+        start.addEventListener('click',()=>{
+            previous.innerText = '';
+            // num1p=0;
+            // num1p=0;
+            // min = minbox.value;
+            // max = maxbox.value;
+            // console.log(min,max);
+            multi(min,max);
+        });
+
+    //     var num1,num2,num1p,num2p,preAns,botdecision
+    //    for (let index = 0; index < 10; index++) {
+    //     console.log(getRandomNumberBetween(15,56));
+    //    }
+        //random number generator
+        function getRandomNumberBetween(a,b){
+            return Math.floor(Math.random()*(b-a+1)+a);
+            }
+
+        function multi(minn,maxx)
+        {
+        if(minn == ""||maxx == "")
+        {
+            alert("Please set Min and Max Values");
+        }
+            // one time parsing
+        // console.log(minn, maxx);
+        num1 = getRandomNumberBetween(minn,maxx);
+        num2 = getRandomNumberBetween(minn,maxx);
+        // console.log(num1, num2);
+
+        que.innerText = `${num1} X ${num2}`;
+
+        num1p = num1;
+        num2p = num2;
+        
+        anim.style.height = "170px";
+        preAns = UserAns.value;
+        cal = num1*num2;
+
+        
+
+        UserAns.addEventListener('keydown',(e)=>{
+            if(e.key == "Enter")
+            {   
+                preAns = UserAns.value;
+                if(preAns == cal)
+                {
+                    botdecision = "Correct !";
+                }
+                else
+                {
+                    botdecision = "Wrong !";
+                }
+
+               
+                
+                UserAns.value ="";
+                previous.innerText = `${botdecision}
+                                        Previous: ${num1p} x ${num2p}
+                                      Youranswer: ${preAns}
+                                      Correct answer: ${cal}      `;
+                 if(preAns ==="")
+                {
+                    previous.innerText = "";
+                }
+
+                num1 = getRandomNumberBetween(minn,maxx);
+                num2 = getRandomNumberBetween(minn,maxx);
+
+                que.innerText = `${num1} X ${num2}`;
+
+                preAns = UserAns.value;
+                cal = num1*num2;
+
+                num1p = num1;
+                num2p = num2;
+                }
+            });
+
+        }
+    </script>
+</body>
+</html>

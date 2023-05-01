@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Table</title>
+    <!-- developer: Durgadas Dhoke contact me: phone:7774929109 mail: durgadasdhoke@gmail.com -->
+    <style>
+        /* //styling starts here */
+        html,body {height: 100%;
+            background-color: rgba(0,0,0,0.2);
+         }
+        #container{
+            position: relative;
+            width: 50%;
+            margin: auto;
+            background-color: rgba(0,0,0,0.2);
+        }
+
+        #select{
+            border: 2px black solid;
+            height: auto;
+            
+        }
+
+        #displayarea{
+            border: 2px black solid;
+            height: 170px;
+            background-color: antiquewhite;
+            text-align: center;
+        }
+
+        #inputbox{
+            position: relative;
+            width: 80%;
+            padding: 10px 20px;
+            /* //margin: 0 20px; */
+            border: 2px black solid; 
+            border-radius: 10px;  
+        }
+        #note{
+            overflow-X:scroll;
+        }
+        .range{
+            position: relative;
+            border: 2px solid black;
+            background-color: aliceblue;
+            color: black;
+            border-radius: 5px;
+            /* height: 15px; */
+            width: 80px;
+            /* text-align: center; */
+            /* height: ; */
+            /* width: 20vw; */
+            /* justify-content: center; */
+            padding: 2px 5px;
+        }
+        @media  screen and (max-width: 600px) {
+            #container{
+                width: 100%;
+            }    
+        }
+        #ranges{
+            display: flex;
+            flex-direction: row;
+            overflow: hidden;
+            overflow-x:scroll;
+        }
+        #close{
+            position: fixed;
+            right: 2%;
+        }
+    </style>
+</head>
+<body>
+    <div id="container" >
+        <div id="select">
+            <form action="./index.html">
+                <input id="close" type="submit" value="X">
+            </form>
+            <h1><center>Square</center> </h1>
+            <hr>
+            <div id="ranges">
+            <div class="range" onclick="fuc(1,10)">1-10</div>
+            <div class="range" onclick="fuc(11,20)">11-20</div>
+            <div class="range" onclick="fuc(21,30)">21-30</div>
+            <div class="range" onclick="fuc(31,40)">31-40</div>
+            <div class="range" onclick="fuc(41,50)">41-50</div>
+            <div class="range" onclick="fuc(51,60)">51-60</div>
+            <div class="range" onclick="fuc(61,70)">61-70</div>
+            <div class="range" onclick="fuc(71,80)">71-80</div>
+            <div class="range" onclick="fuc(81,90)">81-90</div>
+            <div class="range" onclick="fuc(91,100)">91-100</div>
+            </div>
+        </div>
+        <hr>
+        <div id="displayarea">
+            <h1 id="question"></h1>
+            <div class="ali"><p id="pre"></p></div>
+            
+        </div>
+        <hr>
+        <input id="inputbox" type="text" placeholder="Enter Answer Here..." value="">
+        <hr>
+        <pre id="note"><b> NOTE:</b> First select Range to Practice... 
+  If you feel confident then jump to next Range...
+  Press Enter into the input section just to get correct answer.
+  for more suggestions write to me 
+  E-mail : durgadasdhoke@gmail.com</pre>
+        <hr>
+    </div>
+
+    <script>
+        const que = document.getElementById("question");
+        const UserAns = document.getElementById('inputbox');
+        const previous = document.getElementById("pre");
+
+        function fuc(a,b){
+            var ar = [],n;
+            n=a;
+            for(let i=0;i<10;i++)
+            {
+                ar[i]=n;
+                n++;
+            }
+            n=a;
+            var index,previ,bd,ca,ya;
+            const min = 0;
+            var max = 9;
+
+            index = getRandomNumberBetween(min,max);
+            previ = ar[index];
+            que.innerText = `${ar[index]}`;
+            ar.splice(index,1);
+            
+            max = ar.length-1;
+            ya = UserAns.value;
+            ca = previ*previ;
+            // console.log(ya+" "+ca);
+            if(ya == ca)
+            {bd = "Correct !";}
+            else{bd = "Wrong !";}
+             
+            UserAns.addEventListener('keydown',(e)=>{
+                if(e.key=="Enter")
+                {   
+                    ya = UserAns.value;
+                    ca = previ*previ;
+                    if(ya == ca)
+                    {bd = "Correct !";
+                    }
+                    else
+                    {bd = "Wrong !";
+                    }
+                    console.log(previ,ya,ca,bd);
+                
+                    ya = UserAns.value;
+                    ca = previ*previ;
+                    previous.innerText =`${bd}
+                    Previous Question: ${previ}
+                    Your Answer : ${ya}
+                    Correct Answer : ${ca}`;
+
+                    
+
+                    index = getRandomNumberBetween(min,max);
+                    que.innerText = `${ar[index]}`;
+                    previ = ar[index];
+                    
+                    ar.splice(index,1);
+                    // console.log(ar);
+                    max = ar.length-1;
+
+                    if(ar.length == 0)
+                    {
+                        for(let i=0;i<10;i++)
+                        {
+                              ar[i]=n;
+                              n++;
+                        }   
+                    }   
+                    n=a;
+                    UserAns.value = '';
+                }
+                
+            });
+            
+
+
+            
+        }
+        
+        function getRandomNumberBetween(min,max){
+            return Math.floor(Math.random()*(max-min+1)+min);
+            }
+    </script>
+</body>
+</html>

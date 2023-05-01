@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Table</title>
+    <!-- developer: Durgadas Dhoke contact me: phone:7774929109 mail: durgadasdhoke@gmail.com -->
+    <style>
+        /* //styling starts here */
+        html,body {height: 100%;
+            background-color: rgba(0,0,0,0.2);
+         }
+        #container{
+            position: relative;
+            width: 50%;
+            margin: auto;
+            background-color: rgba(0,0,0,0.2);
+        }
+
+        #select{
+            border: 2px black solid;
+            height: 100px;
+            background-color: antiquewhite;
+            text-align: center;
+        }
+
+        #displayarea{
+            border: 2px black solid;
+            height: 170px;
+            background-color: antiquewhite;
+            text-align: center;
+        }
+
+        #inputbox{
+            position: relative;
+            width: 80%;
+            padding: 10px 20px;
+            margin: 0 20px;
+            border: 2px black solid; 
+            border-radius: 10px;  
+        }
+        #note{
+            overflow-X:scroll;
+        }
+       
+        @media  screen and (max-width: 600px) {
+            #container{
+                width: 100%;
+            }    
+        }
+        #close{
+            position: fixed;
+            right: 2%;
+        }
+        
+    </style>
+</head>
+<body>
+    <div id="container" >
+        <div id="select">
+            <form action="./index.html">
+                <input id="close" type="submit" value="X">
+            </form>
+            <p>You choose Table of :</p>
+            <h1 id="tab"></h1>
+        </div>
+        <hr>
+        <div id="displayarea">
+            <h1 id="question"></h1>
+            <div class="ali"><p id="pre"></p></div>
+            
+        </div>
+        <hr>
+        <input id="inputbox" type="text" placeholder="Enter Answer Here..." value="">
+        <hr>
+        <pre id="note"><b> NOTE:</b> Press Enter Your Answer into the input Section
+            Want to practice another Table just Refresh the page
+            for more suggestions write to me 
+            mail : durgadasdhoke@gmail.com</pre>
+        <hr>
+    </div>
+
+    <script>
+        const UserAns = document.getElementById('inputbox');
+        const que = document.getElementById("question");
+        const previous = document.getElementById("pre");
+        const tableans = document.getElementById("tab");
+        
+        var arr = [2,3,4,5,6,7,8,9];
+        var previ,cal,temp,botdecision,i=1;
+        const table = prompt("Which table would you like to practice");
+        if(isNaN(table))
+        {
+            alert("Bro Type Number ,Kindly Refresh page");
+            window.location.assign('./index.html');
+        }
+        if(table === null){
+            window.location.assign('./index.html');            
+        }
+        const min=0;
+        que.innerText = `${table} X 7`;
+        previ=7;
+        cal = table*7;
+        temp = UserAns.value;
+        tableans.innerText = `${table}`;
+
+        UserAns.addEventListener("keydown",function(e){
+        if(e.key ==="Enter")
+        {
+        temp = UserAns.value;
+
+        if(temp == cal)
+        {   
+            botdecision ="Correct!";
+        }
+        else
+        {   
+            if(temp == '')
+            {
+                botdecision="";
+            }else{
+                    if(i==1)
+                    {   
+                        previ=7;
+                        if(temp == cal)
+                        botdecision ="Correct!";
+                        else
+                        botdecision ="Wrong!";
+                    }
+                    else
+                    {
+                        botdecision ="Wrong!";
+                    }
+                  }
+        }
+
+        previous.innerText =`${botdecision} 
+        Previous Exp.:  ${table}*${previ}  
+        Your Answer:    ${temp}  
+        Correct Answer: ${cal}`;
+
+        var max = arr.length-1;
+
+        if(arr.length === 0)
+        {
+            arr = [2,3,4,5,6,7,8,9];  
+        }
+        
+        var ran = getRandomNumberBetween(min,max);
+
+        previ = arr[ran];
+        cal = table* arr[ran];
+        que.innerText = `${table} X ${arr[ran]}`;
+
+        var userInput = UserAns.value;
+        console.log(" Answer : "+ table*arr[ran])
+        arr.splice(ran,1);
+        console.log(arr);
+        
+        UserAns.value = "";
+        i++;
+        }}); 
+        //random number generator
+        function getRandomNumberBetween(min,max){
+            return Math.floor(Math.random()*(max-min+1)+min);
+            }
+    </script>
+</body>
+</html>
